@@ -113,7 +113,7 @@ for i = 1:r
     DCM=rotate3(eul0); %direction cosine matrix
     %employ torque simulator function to get moment 
     M = torqueSim(Field(i,:),eul0,i*dt,dt, theta(1), theta(i),i);
-    plot(1:i,M_history(1:i));
+    M_history(:,i) = M;
     %get new angle 
     [eul0,w0]=motionSim(eul0,w0,t,M);
     t=t+dt;
