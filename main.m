@@ -77,3 +77,9 @@ title('Angular Velocity about XYZ axis');
 xlabel('Time [hours]');
 legend('\omega_x','\omega_y','\omega_z');
 fprintf('done :)\n');
+
+%% Saving Data
+save('attitude_history.mat','attitude_history');
+save('B_hyst_history1.mat','B_hyst_history1');
+save('B_hyst_history2.mat','B_hyst_history2');
+save('M_history.mat','M_history');
