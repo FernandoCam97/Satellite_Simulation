@@ -3,8 +3,7 @@ function [M] = torqueSim(B,angle,t_i, dt, theta_initial, theta_final,iteration)
 % angle is the orientation/attitude of the satellite
 global  Vhyst omega_0 Omega_Sat ...
      S_Omega %Import global constants
-global Field Angles_Position_Indeces ...
-    B_hyst_history1 B_hyst_history2 
+global Field Angles_Position_Indeces B_p V_p b_3
 %% TESTING
 % steps_m = floor(100/dt);
 % Omega_Sat = zeros(3,steps_m);
@@ -54,6 +53,7 @@ angle_index = Angles_Position_Indeces(end);
 
 M_1 = cross(B_hyst1*Vhyst,R_I2B*(R_I2E')*(Field(angle_index, 2:end)'));
 M_2 = cross(B_hyst2*Vhyst,R_I2B*(R_I2E')*(Field(angle_index, 2:end)'));
+M_3 = cross(B_p*V_p*b_3,R_I2B*(R_I2E')*(Field(angle_index, 2:end)')); % Permanent magnet
 %M1 = cross(B_hyst1*Vhyst, 
 %Bhyst=(2/pi)*Bs*atan(p*(H+a.*Hc));
 %mhyst=((Bhyst*Vhyst)/u0).*uhyst; %unit vector attributes rod placement
@@ -62,6 +62,6 @@ M_2 = cross(B_hyst2*Vhyst,R_I2B*(R_I2E')*(Field(angle_index, 2:end)'));
 %oldH = H(3); %store previous external H, used for dH/dt
 %M = [0.00001,0.00001,0.00001];
 M_g = getGravityGradient(attitude,iteration); 
-M = M_1+M_2+M_g;
+M = M_1+M_2+M_3+M_g;
 end
 

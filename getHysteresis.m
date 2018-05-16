@@ -16,7 +16,8 @@ function [B_1, B_2] = getHysteresis(start_time, end_time, time_step, ...
 
 
 global Field Angles_Position_Indeces Isat omega_0 S_Omega b_1 ...
-    b_2 attitude_history B_hyst_history1 B_hyst_history2 
+    b_2 attitude_history B_hyst_history1 B_hyst_history2 H_c ...
+    H_r B_m
 % load('B_1000.csv');
 % Field = B_1000;
 tolerance_angle_find = abs(Field(1,1) - Field(2,1));
@@ -61,13 +62,13 @@ Angles_Position_Indeces = get_angle_index_history(Angles_Position, ...
     tolerance_angle_find, steps, angle_step);
 %% Hysteresis Parameters
 
-H_c = 1.59; % Coercivity of material in A/m
-H_r = 1.969; % Remnance of material in A/m
-B_m = 0.73; % Saturation value in Teslas
-V_h = 7.15*10^(-8); % Volume of hysteresis rod in m^3
-%% Permanent Magnet Parameters
-B_p = 1.28; % Magnetic flux density of permanent magnet in Teslas
-V_p = 7.15*10^(-8); % Volume of permanent magnet in m^3
+% H_c = 1.59; % Coercivity of material in A/m
+% H_r = 1.969; % Remnance of material in A/m
+% B_m = 0.73; % Saturation value in Teslas
+% V_h = 7.15*10^(-8); % Volume of hysteresis rod in m^3
+% %% Permanent Magnet Parameters
+% B_p = 1.28; % Magnetic flux density of permanent magnet in Teslas
+% V_p = 7.15*10^(-8); % Volume of permanent magnet in m^3
 
 %% Main
 %hi_1 = linspace(0,4*pi,steps);

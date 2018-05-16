@@ -3,7 +3,7 @@ clc
 %% Satellite Specifications
 % Define global satellite constants to be used by multiple functions
 global Isat msat r Field R mu B_hyst_history1 B_hyst_history2 M_history ...
-    attitude_history
+    attitude_history b_1 b_2 b_3
 M_history = 0;
 B_hyst_history1 = 0;
 B_hyst_history2 = 0;
@@ -15,13 +15,27 @@ Field = B_1000;
 msat=[1,0,0]*0.3; %magnetic moment for permanent magnets Am^2
 r = 6371; %radius of Earth in km
 % hystersis rod specs
-global p Bs Hc Vhyst uhyst
+global Vhyst uhyst H_c H_r B_m B_p V_p
 uhyst=[0,1,1]; %hysteresis rod unit vectors
-Hc=12; %Coercive force, A/m 
-Br=0.004; %remanence, T
-Bs=0.025; %saturation induction, T
-p=(1/Hc)*tan((pi*Br)/(2*Bs)); %constant from Flatley and Henretty
+%% Hysteresis Setup
+%% Hysteresis Parameters
+H_c = 1.59; % Coercivity of material in A/m
+H_r = 1.969; % Remnance of material in A/m
+B_m = 0.73; % Saturation value in Teslas
 Vhyst = 95e-3*5e-3*5e-3; %rod volume in m
+%% Permanent Magnet Parameters
+B_p = 1.28; % Magnetic flux density of permanent magnet in Teslas
+V_p = 7.15*10^(-8); % Volume of permanent magnet in m^3
+%% Magnet Orientations
+b_1 = [1; 0; 0]; % Hysteresis 1 along here
+b_2 = [0; 1; 0]; % Hysteresis 2 along here
+b_3 = [0; 0; 1]; % Permanent Magnet along here
+%%
+% Hc=12; %Coercive force, A/m 
+% Br=0.004; %remanence, T
+% Bs=0.025; %saturation induction, T
+% p=(1/Hc)*tan((pi*Br)/(2*Bs)); %constant from Flatley and Henretty
+
 %% Keplerian Elements
 % Parameters for ISS Orbit
 mu = 398600;       % Earth’s gravitational parameter [km^3/s^2]

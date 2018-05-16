@@ -4,8 +4,8 @@ function [EUL,W] = simulation(eul0,t,w0,theta,res,final_time)
 %   Many boolean values were used to turn features on or off. This is used
 %   to improve functionality while maintaining run speed.
 % w0 is a 1x3 vector
-global steps_m Omega_Sat S_Omega attitude_history Vhyst b_1 b_2 b_3...
-    omega_0 Field Isat R B_hyst_history1 B_hyst_history2  M_history
+global steps_m Omega_Sat S_Omega attitude_history...
+    omega_0 Field Isat B_hyst_history1 B_hyst_history2  M_history
 %% Initializing Variables
 r = length(theta); %resolution, number of data points
 dt = max(t)-min(t); %time step
@@ -14,10 +14,8 @@ disp(steps_m)
 Omega_Sat = zeros(3,steps_m); %History of angular velocity of sat
 S_Omega = zeros(3,3,steps_m);
 attitude_history = zeros(3, steps_m);
-Vhyst = 95e-3*5e-3*5e-3;
-b_1 = [1; 0; 0]; % Hysteresis 1 along here
-b_2 = [0; 1; 0]; % Hysteresis 2 along here
-b_3 = [0; 0; 1]; % Permanent Magnet along here
+%Vhyst = 95e-3*5e-3*5e-3;
+
 
 omega_0 = 7.27 * 10^(-5); % Earth's constant orbital speed in rad/s
 Isat = inertia(0.1,0.1,0.3,4);
@@ -90,25 +88,15 @@ end
 %B=B.*1e-9; %convert to teslas from nT
 fprintf('done\n');
 fprintf('Computing rotation....\n');
-%% Hysteresis Setup
-%{
-steps = floor((t(end) - t(1))/dt); % Time steps for the simulation
-H_1_history = zeros(1, steps); % History for differential equation
-H_2_history = zeros(1, steps);
-H_1_dot_history = zeros(1, steps);
-H_2_dot_history = zeros(1, steps);
-B1_history = zeros(1, steps); % Magnetic field in hysteresis rod 1 induced by earth's field
-B2_history = zeros(1,steps);
-H_E_dot_history = zeros(3, steps); %Earth's  magnetic field derivative at sta's height
-%}
-%% Hysteresis Parameters
-H_c = 1.59; % Coercivity of material in A/m
-H_r = 1.969; % Remnance of material in A/m
-B_m = 0.73; % Saturation value in Teslas
-V_h = 7.15*10^(-8); % Volume of hysteresis rod in m^3
-%% Permanent Magnet Parameters
-B_p = 1.28; % Magnetic flux density of permanent magnet in Teslas
-V_p = 7.15*10^(-8); % Volume of permanent magnet in m^3
+% %% Hysteresis Setup
+% %% Hysteresis Parameters
+% H_c = 1.59; % Coercivity of material in A/m
+% H_r = 1.969; % Remnance of material in A/m
+% B_m = 0.73; % Saturation value in Teslas
+% %V_h = 7.15*10^(-8); % Volume of hysteresis rod in m^3
+% %% Permanent Magnet Parameters
+% B_p = 1.28; % Magnetic flux density of permanent magnet in Teslas
+% V_p = 7.15*10^(-8); % Volume of permanent magnet in m^3
 %% Histories
 B_hyst_history1  = zeros(1,r);
 B_hyst_history2  = zeros(1,r);
