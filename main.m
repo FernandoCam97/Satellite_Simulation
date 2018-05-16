@@ -3,11 +3,12 @@ clc
 %% Satellite Specifications
 % Define global satellite constants to be used by multiple functions
 global Isat msat r Field R mu B_hyst_history1 B_hyst_history2 M_history ...
-    attitude_history b_1 b_2 b_3
+    attitude_history b_1 b_2 b_3 Angles_Position_Indeces
 M_history = 0;
 B_hyst_history1 = 0;
 B_hyst_history2 = 0;
 attitude_history = 0;
+Angles_Position_Indeces = 0;
 
 Isat = inertia(0.1,0.1,0.3,4);
 load('B_1000.csv');
@@ -68,6 +69,7 @@ fprintf('Apoapsis: %3.2f km\nPeriapsis: %3.2f km\n',Rmag(Ai),Rmag(Pi));
 %clear R
 %% Simulation
 % Initial Conditions
+theta = mod(theta,360); % To keep it to 360
 dt = (T*(max(theta)/360))/length(theta); %timestep
 t=[0,dt]; %time range for ODE solver
 

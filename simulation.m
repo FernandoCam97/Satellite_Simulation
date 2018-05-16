@@ -5,7 +5,8 @@ function [EUL,W] = simulation(eul0,t,w0,theta,res,final_time)
 %   to improve functionality while maintaining run speed.
 % w0 is a 1x3 vector
 global steps_m Omega_Sat S_Omega attitude_history...
-    omega_0 Field Isat B_hyst_history1 B_hyst_history2  M_history
+    omega_0 Field Isat B_hyst_history1 B_hyst_history2  M_history ...
+    Angles_Position_Indeces
 %% Initializing Variables
 r = length(theta); %resolution, number of data points
 dt = max(t)-min(t); %time step
@@ -101,6 +102,9 @@ fprintf('Computing rotation....\n');
 B_hyst_history1  = zeros(1,r);
 B_hyst_history2  = zeros(1,r);
 M_history = zeros(3,r);
+Angles_Position_Indeces = zeros(1,r);
+Angles_Position_Indeces = get_angle_index_history(Field(:,1),...
+    (Field(2,1) - Field(1,1)), r, theta(2) - theta(1),theta);
 % ---- Setup/initialization done ---- %
 
 %% Simulation Loop!
@@ -142,6 +146,7 @@ for i = 1:r
     if any(percent==i)
         fprintf('%0.f%%\n',i/r*100);
     end
+    fprintf('Step %d\n', i)
 end
 if vid
     close(v);

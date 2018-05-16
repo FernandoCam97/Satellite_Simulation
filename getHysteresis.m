@@ -39,7 +39,9 @@ I(3,3) = Isat(3);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tolerance_fix_disc = 1; % To deal with jumps in solution of diff eq.
 %% Time variables for simulation
-steps = floor((end_time - start_time)/time_step) % Time steps for the simulation
+%steps = floor((end_time - start_time)/time_step); % Time steps for the simulation
+%disp(steps-iteration)
+steps = iteration;
 time_interval = linspace(start_time, end_time, steps); % Time interval for the simulation
 %% Initializing Variables
 
@@ -58,8 +60,8 @@ orbit_total_angles = abs(theta_final - theta_initial);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 angle_step = orbit_total_angles/steps; % in degrees
 Angles_Position = Field(:,1);
-Angles_Position_Indeces = get_angle_index_history(Angles_Position, ...
-    tolerance_angle_find, steps, angle_step);
+%Angles_Position_Indeces = get_angle_index_history(Angles_Position, ...
+    %tolerance_angle_find, steps, angle_step);
 %% Hysteresis Parameters
 
 % H_c = 1.59; % Coercivity of material in A/m

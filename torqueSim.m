@@ -49,7 +49,7 @@ attitude = angle'; % We need a column vector
 % 6th input is the current attitude as a column vector.
 R_I2B = rotation_I2B(attitude);
 R_I2E = rotation_I2E(omega_0,t_i);
-angle_index = Angles_Position_Indeces(end);
+angle_index = Angles_Position_Indeces(iteration);
 
 M_1 = cross(B_hyst1*Vhyst,R_I2B*(R_I2E')*(Field(angle_index, 2:end)'));
 M_2 = cross(B_hyst2*Vhyst,R_I2B*(R_I2E')*(Field(angle_index, 2:end)'));
