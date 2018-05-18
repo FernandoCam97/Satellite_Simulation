@@ -75,7 +75,7 @@ t=[0,dt]; %time range for ODE solver
 
 
 eul0=[0,0,0]; %initial angle in rad
-w0=[0,1,1]*0.001; %initial rotation in rad/s
+w0=[0,0,0]*0.001; %initial rotation in rad/s
 % Run simulation function: requires orbit path & initial conditions
 final_time = n(1)*T/3600;
 [EUL,W]=simulation(eul0,t,w0,theta,'high',final_time);
