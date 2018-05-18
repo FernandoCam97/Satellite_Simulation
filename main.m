@@ -11,8 +11,8 @@ attitude_history = 0;
 Angles_Position_Indeces = 0;
 
 Isat = inertia(0.1,0.1,0.3,4);
-load('B_1000.csv');
-Field = B_1000;
+%load('B_1000.csv');
+%Field = B_1000;
 msat=[1,0,0]*0.3; %magnetic moment for permanent magnets Am^2
 r = 6371; %radius of Earth in km
 % hystersis rod specs
@@ -46,10 +46,10 @@ RAAN = 194.78;     % [deg] Right ascension (RA) of the ascending node
 e    = 0.0007;     % Eccentricity
 omega = 255.33;    % [deg] Argument of periapsis
 %% Orbit Specification
-n=[1.2,10]; % resolution modifier n(1) is the # of orbits, and n(2) is the resulution of points
+n=[2,10]; % resolution modifier n(1) is the # of orbits, and n(2) is the points per degree
 theta = linspace(0,n(1)*360,n(1)*360*n(2));   % [deg] True anomaly, controls sim resolution and length
 % ensure practicality
-if length(theta)>size(Field,1)
+if length(theta)>1000000
     error('The array length is greater than 1,000,000. Are you trying to melt your computer?');
 end
 %% Setup Orbit
@@ -59,14 +59,12 @@ end
 [~,Pi] = min(Rmag); %periapsis and index
 
 
-
 T=2*pi*sqrt((A^3)/mu); %period of orbit (time)
 
 
-
 fprintf('Apoapsis: %3.2f km\nPeriapsis: %3.2f km\n',Rmag(Ai),Rmag(Pi));
-%GEO = cart2geo(R(1,:),R(2,:),R(3,:)); %convert from ECEF cartesian to GCS
-%clear R
+GEO = cart2geo(R(1,:),R(2,:),R(3,:)); %convert from ECEF cartesian to GCS
+clear R
 %% Simulation
 % Initial Conditions
 theta = mod(theta,360); % To keep it to 360
@@ -78,7 +76,7 @@ eul0=[0,0,0]; %initial angle in rad
 w0=[0,0,0]*0.001; %initial rotation in rad/s
 % Run simulation function: requires orbit path & initial conditions
 final_time = n(1)*T/3600;
-[EUL,W]=simulation(eul0,t,w0,theta,'high',final_time);
+[EUL,W]=simulation(GEO,eul0,t,w0,theta,'off',final_time);
 %plot angular velocity and angle wrt. time
 figure
 t=linspace(0,n(1)*T/3600,length(theta));

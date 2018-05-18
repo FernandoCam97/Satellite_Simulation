@@ -1,4 +1,4 @@
-function [EUL,W] = simulation(eul0,t,w0,theta,res,final_time)
+function [EUL,W] = simulation(GEO,eul0,t,w0,theta,res,final_time)
 %SIMULATION Simulate the motion of the satellite. Includes data output and
 %exportable (.mp4) animated rotation plot.
 %   Many boolean values were used to turn features on or off. This is used
@@ -80,13 +80,13 @@ if dt>2
 end
 % magnetic field at each point
 fprintf('\nBuilding magnetic field....');
-%B=ones(r,3); %initialize matrix
-%{
+Field=ones(r,3); %initialize matrix
+
 for i = 1:r
-    [B(i,:),~,~,~,~]=wrldmagm(GEO(1,i),GEO(2,i),GEO(3,i),decyear(2017,3,23)); % BUilds magnetic field
+    [Field(i,:),~,~,~,~]=wrldmagm(GEO(1,i),GEO(2,i),GEO(3,i),decyear(2018,5,17)); % Builds magnetic field
 end
-%}
-%B=B.*1e-9; %convert to teslas from nT
+
+Field=Field.*1e-9; %convert to teslas from nT
 fprintf('done\n');
 fprintf('Computing rotation....\n');
 % %% Hysteresis Setup
