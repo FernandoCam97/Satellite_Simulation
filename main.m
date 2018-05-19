@@ -21,7 +21,7 @@ uhyst=[0,1,1]; %hysteresis rod unit vectors
 %% Hysteresis Setup
 %% Hysteresis Parameters
 H_c = 1.59; % Coercivity of material in A/m
-H_r = 1.969; % Remnance of material in A/m
+H_r = 278521; % Remnance of material in A/m
 B_m = 0.73; % Saturation value in Teslas
 Vhyst = 95e-3*5e-3*5e-3; %rod volume in m
 %% Permanent Magnet Parameters
@@ -75,10 +75,10 @@ t=[0,dt]; %time range for ODE solver
 
 
 eul0=[0,0,0]; %initial angle in rad
-w0=[0,1,1]*0.001; %initial rotation in rad/s
+w0=[0,0,0]*0.001; %initial rotation in rad/s
 % Run simulation function: requires orbit path & initial conditions
 final_time = n(1)*T/3600;
-[EUL,W]=simulation(eul0,t,w0,theta,'high',final_time);
+[EUL,W]=simulation(eul0,t,w0,theta,'off',final_time);
 %plot angular velocity and angle wrt. time
 figure
 t=linspace(0,n(1)*T/3600,length(theta));
