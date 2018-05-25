@@ -108,7 +108,7 @@ Angles_Position_Indeces = get_angle_index_history(Field(:,1),...
 % ---- Setup/initialization done ---- %
 
 %% Simulation Loop!
-for i = 1:r
+for i = 1:r-1
     if plotVar
         if ~ishghandle(fig) %exit loop if figure window is closed
             error('Figure closed, simulation stopped.');
