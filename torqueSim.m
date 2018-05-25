@@ -39,8 +39,9 @@ S_Omega(:,:,iteration) = getS_Omega(Omega_Sat(:,iteration)); % We're going to ha
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Get Hysteresis
 attitude = angle'; % We need a column vector
 start_iteration = 0;
-if iteration > 30
-    start_iteration = iteration - 10;
+time_domain = 10;
+if iteration > time_domain
+    start_iteration = iteration - time_domain;
     
 end
 start_time = dt*start_iteration;
