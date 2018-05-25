@@ -38,16 +38,12 @@ S_Omega(:,:,iteration) = getS_Omega(Omega_Sat(:,iteration)); % We're going to ha
 %hysteresis loop model, rhombus shaped hysteresis loop
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Get Hysteresis
 attitude = angle'; % We need a column vector
-start_iteration = 0;
-if iteration > 30
-    start_iteration = iteration - 10;
-    
+start_time = 0;
+if iteration > 50
+    start_time = 
 end
-start_time = dt*start_iteration;
-%fprintf('t_i = %f\n',t_i)
-%fprintf('start_time = %f\n',start_time)
-[B_hyst1, B_hyst2] = getHysteresis(start_time, t_i+dt, dt, theta_final, ...
-    theta_initial, attitude,iteration,start_iteration);
+[B_hyst1, B_hyst2] = getHysteresis(0, t_i+dt, dt, theta_final, ...
+    theta_initial, attitude,iteration);
 % 1st input is starting time (we will alsways have this as 0 so that we 
 % can integrate accuratele)
 % 2nd input is the current time we need the field at
@@ -69,8 +65,6 @@ M_3 = cross(B_p*V_p*b_3,R_I2B*(R_I2E')*(Field(angle_index, 2:end)')); % Permanen
 %M=cross(m,B);
 %oldH = H(3); %store previous external H, used for dH/dt
 %M = [0.00001,0.00001,0.00001];
-%disp(M_1)
-%disp(M_2)
 M_g = getGravityGradient(attitude,iteration); 
 M = M_1+M_2+M_3+M_g;
 end

@@ -31,7 +31,7 @@ I(3,3) = Isat(3);
 tolerance_fix_disc = 1; % To deal with jumps in solution of diff eq.
 %% Time variables for simulation
 steps = floor((end_time - start_time)/time_step); % Time steps for the simulation
-%fprintf('Steps Hyst = %f',steps)
+fprintf('Steps Hyst = %f',steps)
 %steps = iteration;
 time_interval = linspace(start_time, end_time, steps); % Time interval for the simulation
 %% Initializing Variables
@@ -87,15 +87,13 @@ for i = 1 : steps
         + b_2'*rotation_I2B(attitude_history(:,n_i))*rotation_I2E(omega_0,time_interval(i))...
         *H_E_dot_history(:,i);
 end
-initial_condition_B1 = B_hyst_history1(start_iteration+1);
-initial_condition_B2 = B_hyst_history2(start_iteration+1);
+initial_condition_B1 = B_hyst_history1(start_iteration);%%%%%%%%%!!!!!!!!!!!!!!!!!
+initial_condition_B2 = B_hyst_history2(start_iteration);
 for i = 1 : steps
     B1_history(i) = solve_diffEqu_B(1, start_time, H_1_history, H_1_dot_history,...
-    	i, time_step, H_c, H_r, B_m, initial_condition_B1,steps,end_time,...
-        start_iteration+1);
+    	i, time_step, H_c, H_r, B_m, initial_condition_B1,steps,start_iteration);
     B2_history(i) = solve_diffEqu_B(2, start_time, H_2_history, H_2_dot_history,...
-    	i, time_step, H_c, H_r, B_m, initial_condition_B2,steps,end_time,...
-        start_iteration+1);
+    	i, time_step, H_c, H_r, B_m, initial_condition_B2,steps,start_iteration);
     if i > 2
         if abs(B1_history(i) - B1_history(i-1)) > tolerance_fix_disc
             B1_history(i) = B1_history(i-1) + (B1_history(i-1) - B1_history(i-2))...

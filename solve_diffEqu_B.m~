@@ -18,18 +18,19 @@ end
 %end_time = start_time + (start_iteration+iteration)*time_step;
 time_interval = linspace(start_time, end_time, steps);
 %% Adjusting Histories
-H_i_history = H_i_history(1,1:steps);
-H_i_dot_history = H_i_dot_history(1,1:steps);
+n = start_iteration + steps;
+H_i_history = H_i_history(1,start_iteration:);
+H_i_dot_history = H_i_dot_history(1,start_iteration:steps);
 
 
 if iteration ~= 1
     [t, B_i_sol] = ode45(@(t,B) get_dB_dt(t, B, time_interval, H_c, H_r,...
-        B_m, H_i_history, H_i_dot_history), [start_time end_time], initial_conditions);
+        B_m, H_i_history, H_i_dot_history), [0 end_time], initial_conditions);
 else
     dB_dt = @(t,B) ((2*B_m)/(H_r*pi))*((((H_c - H_i_history(1))*cos((pi*B)...
         /(2*B_m)) + H_r*sin((pi*B)/(2*B_m)))/(2*H_c))^2)...
         * H_i_dot_history(1);
-    [t, B_i_sol] = ode45(dB_dt, [start_time end_time], initial_conditions);
+    [t, B_i_sol] = ode45(dB_dt, [0 end_time], initial_conditions);
 end
 
 B_i_sol_t = B_i_sol(end);
